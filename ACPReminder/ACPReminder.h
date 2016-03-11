@@ -64,6 +64,8 @@
  */
 @property (nonatomic, strong) NSArray* timePeriods;
 
+@property (nonatomic, assign) NSTimeInterval fireTimeFromBeginingOfDate;
+
 
 /**
  *  @abstract Prepares the local notification and it will be schedule.
@@ -71,6 +73,10 @@
  *  @note This method should be called when the user is going to close the application usually \c -applicationDidEnterBackground:
  */
 - (void) createLocalNotification;
+
+- (void) createSeriesOfLocalNotifications:(NSInteger)count;
+
+- (void) resetNotificationTimePeriod;
 
 /**
  *  @abstract This method is called when the aplication become active (usually  \c -applicationDidBecomeActive:).

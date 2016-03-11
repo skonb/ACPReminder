@@ -16,6 +16,7 @@ lastPathComponent], __LINE__, [NSString stringWithFormat:(s), ##__VA_ARGS__] )
 
 
 #import "ACPReminder.h"
+#import "NSDate+Additions.h"
 
 #if !__has_feature(objc_arc)
 #error This class requires automatic reference counting
@@ -68,6 +69,7 @@ static NSString *const kACPNotificationPeriodIndex = @"kACPNotificationPeriodInd
         _testFlagInSeconds = NO;
         _circularTimePeriod = NO;
         _appDomain = kACPLocalNotificationDomain;
+        _fireTimeFromBeginingOfDate = 12 * 60 * 60; //12:00 AM
     }
     
     return self;
@@ -110,6 +112,46 @@ static NSString *const kACPNotificationPeriodIndex = @"kACPNotificationPeriodInd
     [[NSUserDefaults standardUserDefaults] synchronize];
     ACPLog(@"Local notification scheduled \n Message: %@ with delay %zd", message, [periodValue integerValue]);
     
+}
+
+- (void) createSeriesOfLocalNotifications:(NSInteger)count{
+    if(!self.messages) {
+        ACPLog(@"WARNING: You dont have any message defined!");
+        return;
+    }
+    
+    [self cancelThisKindOfNotification:kACPLocalNotificationApp];
+    
+    NSDate *previousFireDate = [NSDate date];
+    for (int i = 0 ; i < count ; ++i){
+        NSNumber* timePeriodIndex = [self getTimePeriodIndex];
+        NSNumber* periodValue = [self getTimePeriodValue:[timePeriodIndex unsignedIntegerValue]];
+        NSUInteger messageIndex = [self getMessageIndex];
+        NSString * message = self.messages[messageIndex];
+        
+        NSDate *dateToFire = nil;
+        if(self.testFlagInSeconds){
+            dateToFire = [self dateByAddingSeconds:[periodValue integerValue] toDate:previousFireDate];
+        }else{
+            dateToFire = [self date:[self dateByAddingDays:[periodValue integerValue] toDate:previousFireDate] bySpecifyingTimeIntervalFromBeginningOfDate:self.fireTimeFromBeginingOfDate];
+        }
+        previousFireDate = dateToFire;
+        
+        
+        UILocalNotification *localNotification = [UILocalNotification new];
+        localNotification.fireDate = dateToFire;
+        localNotification.alertBody = message;
+        localNotification.soundName = UILocalNotificationDefaultSoundName;
+        localNotification.applicationIconBadgeNumber = i + 1; // increment
+        
+        NSDictionary *infoDict = [NSDictionary dictionaryWithObjectsAndKeys:timePeriodIndex, kACPNotificationPeriodIndex, kACPLocalNotificationApp, self.appDomain, nil];
+        localNotification.userInfo = infoDict;
+        [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+        [[NSUserDefaults standardUserDefaults] setObject:timePeriodIndex forKey:kACPLastNotificationFired];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        [self changeNotificationTimePeriod:[timePeriodIndex integerValue]];
+        ACPLog(@"Local notification scheduled \n Message: %@ with delay %zd", message, [periodValue integerValue]);
+    }
 }
 
 
@@ -178,6 +220,12 @@ static NSString *const kACPNotificationPeriodIndex = @"kACPNotificationPeriodInd
     ACPLog(@"Notification time period has changed from %zd to %zd", lastNotification, newNotification);
     
     [[NSUserDefaults standardUserDefaults] setObject:@(newNotification) forKey:kACPLastNotificationFired];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+}
+
+-(void)resetNotificationTimePeriod{
+    [[NSUserDefaults standardUserDefaults] setObject:@(0) forKey:kACPLastNotificationFired];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
 }
@@ -252,16 +300,31 @@ static NSString *const kACPNotificationPeriodIndex = @"kACPNotificationPeriodInd
 
 - (NSDate *) dateByAddingDays: (NSInteger) dDays
 {
-	NSTimeInterval aTimeInterval = [NSDate timeIntervalSinceReferenceDate] + kACPDays * dDays;
-	NSDate *newDate = [NSDate dateWithTimeIntervalSinceReferenceDate:aTimeInterval];
-	return newDate;
+    return [self dateByAddingDays:dDays toDate:[NSDate date]];
 }
 
 - (NSDate *) dateByAddingSeconds: (NSInteger) dSeconds
 {
-	NSTimeInterval aTimeInterval = [NSDate timeIntervalSinceReferenceDate] + dSeconds;
-	NSDate *newDate = [NSDate dateWithTimeIntervalSinceReferenceDate:aTimeInterval];
-	return newDate;
+    return [self dateByAddingSeconds:dSeconds toDate:[NSDate date]];
+}
+
+- (NSDate *) dateByAddingDays: (NSInteger) dDays toDate:(NSDate*)date
+{
+    NSTimeInterval aTimeInterval = [date timeIntervalSinceReferenceDate] + kACPDays * dDays;
+    NSDate *newDate = [NSDate dateWithTimeIntervalSinceReferenceDate:aTimeInterval];
+    return newDate;
+}
+
+- (NSDate *) dateByAddingSeconds: (NSInteger) dSeconds toDate:(NSDate*)date
+{
+    NSTimeInterval aTimeInterval = [date timeIntervalSinceReferenceDate] + dSeconds;
+    NSDate *newDate = [NSDate dateWithTimeIntervalSinceReferenceDate:aTimeInterval];
+    return newDate;
+}
+
+- (NSDate*) date:(NSDate*) date bySpecifyingTimeIntervalFromBeginningOfDate:(NSTimeInterval)fromBeginningOfDate{
+    NSDate *d = [date beginningOfDateInTimeZone:[NSTimeZone defaultTimeZone]];
+    return [d dateByAddingTimeInterval:fromBeginningOfDate];
 }
 
 - (void) setTestFlagInSeconds:(BOOL)testFlagInSeconds {

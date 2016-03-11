@@ -9,7 +9,6 @@
 #import "ACPAppDelegate.h"
 #import "ACPReminder.h"
 
-
 @implementation ACPAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -36,7 +35,7 @@
     localNotifications.testFlagInSeconds = YES; //By default is NO (optional) -->For testing purpose only!
     localNotifications.circularTimePeriod = YES; // By default is NO (optional)
 
-    [localNotifications createLocalNotification];
+    [localNotifications createSeriesOfLocalNotifications:4];
 }
 
 

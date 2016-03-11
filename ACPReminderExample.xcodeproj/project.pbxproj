@@ -14,6 +14,7 @@
 		84B10179F38C470BA11F0B35 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CE80930C954B929164E252 /* main.m */; };
 		997F3EE81505499E9DA5F981 /* ACPAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AC5FF7E684B94687A364EB30 /* ACPAppDelegate.m */; };
 		E01D8B47084342B095C96899 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AAEDB9EA4B424D5D85B04E0A /* Images.xcassets */; };
+		FD0D04231C92D0BE00F83323 /* NSDate+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = FD0D04221C92D0BE00F83323 /* NSDate+Additions.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +43,8 @@
 		AC5FF7E684B94687A364EB30 /* ACPAppDelegate.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = ACPAppDelegate.m; sourceTree = "<group>"; };
 		E767D1A7F29341BC92AB0108 /* ACPReminderExample-Prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "ACPReminderExample-Prefix.pch"; sourceTree = "<group>"; };
 		F6066A18A73B443DB7CAB485 /* ACPReminderExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ACPReminderExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FD0D04211C92D0BE00F83323 /* NSDate+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Additions.h"; sourceTree = "<group>"; };
+		FD0D04221C92D0BE00F83323 /* NSDate+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Additions.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +88,8 @@
 		452F60EA190D1DEA00E4AF83 /* ACPReminder */ = {
 			isa = PBXGroup;
 			children = (
+				FD0D04211C92D0BE00F83323 /* NSDate+Additions.h */,
+				FD0D04221C92D0BE00F83323 /* NSDate+Additions.m */,
 				452F60EB190D1DFE00E4AF83 /* ACPReminder.h */,
 				452F60EC190D1DFE00E4AF83 /* ACPReminder.m */,
 			);
@@ -317,6 +322,7 @@
 			files = (
 				997F3EE81505499E9DA5F981 /* ACPAppDelegate.m in Sources */,
 				84B10179F38C470BA11F0B35 /* main.m in Sources */,
+				FD0D04231C92D0BE00F83323 /* NSDate+Additions.m in Sources */,
 				452F60ED190D1DFE00E4AF83 /* ACPReminder.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
