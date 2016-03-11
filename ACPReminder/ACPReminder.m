@@ -144,7 +144,9 @@ static NSString *const kACPNotificationPeriodIndex = @"kACPNotificationPeriodInd
         localNotification.soundName = UILocalNotificationDefaultSoundName;
         localNotification.applicationIconBadgeNumber = i + 1; // increment
         
-        NSDictionary *infoDict = [NSDictionary dictionaryWithObjectsAndKeys:timePeriodIndex, kACPNotificationPeriodIndex, kACPLocalNotificationApp, self.appDomain, nil];
+        NSDictionary *infoDict = @{kACPNotificationPeriodIndex: timePeriodIndex,
+                                   kACPLocalNotificationApp: self.appDomain,
+                                   kACPNotificationMessageIndex: @(messageIndex)};
         localNotification.userInfo = infoDict;
         [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
         [[NSUserDefaults standardUserDefaults] setObject:timePeriodIndex forKey:kACPLastNotificationFired];
