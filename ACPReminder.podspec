@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
 # Source Info
   s.platform     =  :ios, '5.1'
   s.source       =  {:git => 'https://github.com/antoniocasero/ACPReminder.git', :tag => s.version.to_s}
-  s.source_files = 'ACPReminder/ACPReminder.{h,m}'
+  s.source_files = 'ACPReminder/ACPReminder.{h,m}', 'ACPReminder/NSDate+Additions.{h,m}'
 
 
   s.requires_arc = true
