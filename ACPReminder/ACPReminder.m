@@ -26,11 +26,11 @@ lastPathComponent], __LINE__, [NSString stringWithFormat:(s), ##__VA_ARGS__] )
 static NSInteger const kACPDays = 86400;
 
 
-static NSString *const kACPLocalNotificationDomain = @"com.company.ACPReminder";
-static NSString *const kACPLocalNotificationApp = @"ACPLocalNotificationApp";
-static NSString *const kACPLastNotificationFired = @"ACPLastNotificationFired";
-static NSString *const kACPNotificationMessageIndex = @"ACPNotificationMessageIndex";
-static NSString *const kACPNotificationPeriodIndex = @"kACPNotificationPeriodIndex";
+NSString *const kACPLocalNotificationDomain = @"com.company.ACPReminder";
+NSString *const kACPLocalNotificationApp = @"ACPLocalNotificationApp";
+NSString *const kACPLastNotificationFired = @"ACPLastNotificationFired";
+NSString *const kACPNotificationMessageIndex = @"ACPNotificationMessageIndex";
+NSString *const kACPNotificationPeriodIndex = @"kACPNotificationPeriodIndex";
 
 
 @interface ACPReminder ()

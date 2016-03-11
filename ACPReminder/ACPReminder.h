@@ -8,7 +8,11 @@
 
 
 #import <Foundation/Foundation.h>
-
+extern NSString *const kACPLocalNotificationDomain;
+extern NSString *const kACPLocalNotificationApp ;
+extern NSString *const kACPLastNotificationFired;
+extern NSString *const kACPNotificationMessageIndex;
+extern NSString *const kACPNotificationPeriodIndex;
 /**
  `Purpose` ACPReminder provides automatic local notificacions, in order to marketing your app or explaining use cases to user. It will schedule automatically some predefined messages when the user closes your application, and it will be trigger some time later if the user doesn't open the app in that period of time. If the notification has been triggered, then it will take another of your predefined messages and scheduled with the next date, defined previously.
 
