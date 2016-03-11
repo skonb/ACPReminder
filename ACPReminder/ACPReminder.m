@@ -229,7 +229,10 @@ static NSString *const kACPNotificationPeriodIndex = @"kACPNotificationPeriodInd
 -(void)resetNotificationTimePeriod{
     [[NSUserDefaults standardUserDefaults] setObject:@(0) forKey:kACPLastNotificationFired];
     [[NSUserDefaults standardUserDefaults] synchronize];
-    
+}
+
+-(void) unsetAllNotifications{
+    [self cancelThisKindOfNotification:kACPLocalNotificationApp];
 }
 
 

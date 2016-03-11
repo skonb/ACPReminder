@@ -78,6 +78,8 @@
 
 - (void) resetNotificationTimePeriod;
 
+- (void) unsetAllNotifications;
+
 /**
  *  @abstract This method is called when the aplication become active (usually  \c -applicationDidBecomeActive:).
  *  @discussion It will check if we have any local notification pending, in that case, it will be cancelled,
