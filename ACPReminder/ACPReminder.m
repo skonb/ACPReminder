@@ -145,7 +145,7 @@ NSString *const kACPNotificationPeriodIndex = @"kACPNotificationPeriodIndex";
         localNotification.applicationIconBadgeNumber = i + 1; // increment
         
         NSDictionary *infoDict = @{kACPNotificationPeriodIndex: timePeriodIndex,
-                                   kACPLocalNotificationApp: self.appDomain,
+                                   self.appDomain: kACPLocalNotificationApp ,
                                    kACPNotificationMessageIndex: @(messageIndex)};
         localNotification.userInfo = infoDict;
         [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
