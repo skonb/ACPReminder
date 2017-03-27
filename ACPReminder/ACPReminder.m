@@ -29,7 +29,8 @@ static NSInteger const kACPDays = 86400;
 NSString *const kACPLocalNotificationDomain = @"com.company.ACPReminder";
 NSString *const kACPLocalNotificationApp = @"ACPLocalNotificationApp";
 NSString *const kACPLastNotificationFired = @"ACPLastNotificationFired";
-NSString *const kACPNotificationMessageIndex = @"ACPNotificationMessageIndex";
+NSString *const kACPNotificationMessageKey = @"ACPNotificationMessageKey";
+NSString *const kACPNotificationMessageIndex = @"ACPNotificationMessageKey";
 NSString *const kACPNotificationPeriodIndex = @"kACPNotificationPeriodIndex";
 
 
@@ -128,6 +129,10 @@ NSString *const kACPNotificationPeriodIndex = @"kACPNotificationPeriodIndex";
         NSNumber* periodValue = [self getTimePeriodValue:[timePeriodIndex unsignedIntegerValue]];
         NSUInteger messageIndex = [self getMessageIndex];
         NSString * message = self.messages[messageIndex];
+        NSString *key = self.messageKeys[messageIndex];
+        if(!key){
+            key = [NSString stringWithFormat:@"%lu", (unsigned long)messageIndex];
+        }
         
         NSDate *dateToFire = nil;
         if(self.testFlagInSeconds){
@@ -146,7 +151,7 @@ NSString *const kACPNotificationPeriodIndex = @"kACPNotificationPeriodIndex";
         
         NSDictionary *infoDict = @{kACPNotificationPeriodIndex: timePeriodIndex,
                                    self.appDomain: kACPLocalNotificationApp ,
-                                   kACPNotificationMessageIndex: @(messageIndex)};
+                                   kACPNotificationMessageKey: key};
         localNotification.userInfo = infoDict;
         [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
         [[NSUserDefaults standardUserDefaults] setObject:timePeriodIndex forKey:kACPLastNotificationFired];

@@ -11,6 +11,7 @@
 extern NSString *const kACPLocalNotificationDomain;
 extern NSString *const kACPLocalNotificationApp ;
 extern NSString *const kACPLastNotificationFired;
+extern NSString *const kACPNotificationMessageKey;
 extern NSString *const kACPNotificationMessageIndex;
 extern NSString *const kACPNotificationPeriodIndex;
 /**
@@ -60,6 +61,7 @@ extern NSString *const kACPNotificationPeriodIndex;
  *  @see NSLocalizedString
  */
 @property (nonatomic, strong) NSArray* messages;
+@property (nonatomic, strong) NSArray* messageKeys;
 
 /**
  *  @abstract Array of time periods between the one local notification presented and the next one.
